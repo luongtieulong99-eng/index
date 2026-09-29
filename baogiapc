@@ -3,233 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Báo Giá Xe VinFast Nhanh</title>
+    <title>Báo Giá Xe VinFast Nhanh - PC 4:3</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- html2canvas để chụp ảnh báo giá -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        @media (min-width: 1024px) {
+            .ratio-4-3-container {
+                width: 1200px;
+                height: 900px;
+            }
+        }
+    </style>
 </head>
-<body class="bg-slate-100 min-h-screen py-6 px-4 font-sans text-slate-800">
+<body class="bg-slate-900 min-h-screen py-6 px-4 font-sans text-slate-800 flex items-center justify-center">
 
-    <div class="max-w-md mx-auto space-y-4">
+    <div class="ratio-4-3-container w-full bg-slate-100 rounded-2xl shadow-2xl overflow-hidden flex flex-col p-6 space-y-4">
         <!-- HEADER -->
-        <div class="bg-blue-600 text-white p-4 rounded-xl shadow-md text-center">
-            <h1 class="text-xl font-bold uppercase tracking-wide">Tính Báo Giá Xe VinFast</h1>
-            <p class="text-xs text-blue-100 mt-1">Dự toán chi phí lăn bánh & gói vay trả góp</p>
+        <div class="bg-blue-600 text-white p-3.5 rounded-xl shadow-md flex justify-between items-center shrink-0">
+            <div class="text-left">
+                <h1 class="text-xl font-bold uppercase tracking-wide">Bảng Dự Toán Chi Phí & Trả Góp Xe VinFast</h1>
+                <p class="text-xs text-blue-100">Giao diện PC chuẩn 4:3 | Tự động tính toán &amp; Xuất báo giá chuyên nghiệp</p>
+            </div>
+            <div class="text-right text-xs bg-blue-700/60 px-3 py-1.5 rounded-lg border border-blue-400/30">
+                <p class="font-bold">Hotline / Zalo: 0913.826.699</p>
+                <p class="text-blue-200">Tư vấn bán hàng: Mr. Long</p>
+            </div>
         </div>
 
-        <!-- FORM NHẬP THÔNG TIN -->
-        <div class="bg-white p-5 rounded-xl shadow-sm space-y-4 border border-slate-200">
-            <!-- Chọn Mẫu Xe -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Chọn dòng xe VinFast (Kèm Pin)</label>
-                <select id="chonXe" onchange="changeCar()" class="w-full border border-slate-300 rounded-lg p-2.5 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none font-semibold text-slate-800">
-                    <option value="custom" data-price="0">-- Chọn dòng xe --</option>
-                    <option value="VF2" data-price="188000000">VF 2</option>
-                    <option value="VF3_ECO" data-price="285000000">VF 3 ECO</option>
-                    <option value="VF3_PLUS" data-price="296000000">VF 3 PLUS</option>
-                    <option value="VF5" data-price="496000000">VinFast VF 5</option>
-                    <option value="MinioGreen" data-price="188000000">Minio Green</option>
-                    <option value="HerioGreen" data-price="450000000">Herio Green</option>
-                    <option value="LimoGreen" data-price="699000000">Limo Green</option>
-                    <option value="ECVAN_TC" data-price="268000000">EC Van TC</option>
-                    <option value="ECVAN_NC" data-price="286000000">EC Van NC</option>
-                    <option value="ECVAN_NC_CT" data-price="306000000">EC Van NC CT</option>
-                    <option value="MPV7" data-price="750000000">MPV 7 chỗ</option>
-                    <option value="VF6_Eco" data-price="650000000">VinFast VF 6 Eco</option>
-                    <option value="VF6_Plus" data-price="710000000">VinFast VF 6 Plus</option>
-                    <option value="VF7_Eco" data-price="740000000">VinFast VF 7 Eco</option>
-                    <option value="VF7_Plus" data-price="889000000">VinFast VF 7 Plus</option>
-                    <option value="VF8_Eco" data-price="910000000">VinFast VF 8 Eco</option>
-                    <option value="VF8_Plus" data-price="1079000000">VinFast VF 8 Plus</option>
-                    <option value="VF9_Eco" data-price="1348000000">VinFast VF 9 Eco</option>
-                    <option value="VF9_Plus" data-price="1529000000">VinFast VF 9 Plus</option>
-                </select>
-            </div>
+        <!-- MAIN CONTENT CONTAINER (2 COLUMNS FIT TO 4:3) -->
+        <div class="grid grid-cols-12 gap-6 flex-1 min-h-0">
+            
+            <!-- CỘT TRÁI: BỘ ĐIỀU KHIỂN / NHẬP LIỆU -->
+            <div class="col-span-5 bg-white p-4 rounded-xl shadow-sm border border-slate-200 overflow-y-auto space-y-3.5 text-xs">
+                <h2 class="font-bold text-slate-700 text-sm border-b pb-2 uppercase flex items-center gap-2">
+                    <span>⚙️</span> Thông Số Báo Giá
+                </h2>
 
-            <!-- Giá Niêm Yết -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Giá xe niêm yết (VNĐ)</label>
-                <input type="number" id="giaXe" value="285000000" step="1000000" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none font-semibold text-blue-600">
-            </div>
-
-            <!-- Ưu đãi -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Khuyến mãi / Giảm giá (VNĐ)</label>
-                <input type="number" id="khuyenMai" value="0" step="1000000" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-            </div>
-
-            <!-- Chi phí đăng ký / Lăn bánh -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Chi phí đăng ký / Lăn bánh (VNĐ)</label>
-                <input type="number" id="phiDangKy" value="12000000" step="500000" class="w-full border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-            </div>
-
-            <!-- Bảo hiểm thân vỏ -->
-            <div class="bg-amber-50/60 p-3 rounded-lg border border-amber-200/60 space-y-2">
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" id="checkBHTV" checked class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
-                        <span class="text-xs font-bold text-amber-900 uppercase">Mua bảo hiểm thân vỏ</span>
-                    </label>
-                    <span id="outBHTVValue" class="text-xs font-bold text-amber-800">0 đ</span>
-                </div>
-                
-                <div id="boxBHTVConfig" class="grid grid-cols-2 gap-2 text-xs pt-1">
-                    <div>
-                        <label class="block text-[11px] text-slate-600 mb-0.5">Tỷ lệ phí (%/năm)</label>
-                        <input type="number" id="tyLeBHTV" value="1.3" step="0.1" class="w-full border border-slate-300 rounded-md p-1.5 focus:ring-1 focus:ring-blue-500 bg-white">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] text-slate-600 mb-0.5">Thanh toán</label>
-                        <select id="cachTraBHTV" class="w-full border border-slate-300 rounded-md p-1.5 focus:ring-1 focus:ring-blue-500 bg-white">
-                            <option value="cash">Tiền mặt (Lăn bánh)</option>
-                            <option value="loan">Gộp vào khoản vay</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <hr class="border-slate-100 my-2">
-
-            <!-- Trả trước % -->
-            <div>
-                <div class="flex justify-between items-center mb-1">
-                    <label class="text-xs font-semibold text-slate-600 uppercase">Tỷ lệ trả trước (%)</label>
-                    <span id="labelTyLe" class="text-sm font-bold text-blue-600">20%</span>
-                </div>
-                <input type="range" id="tyLeTraTruoc" min="0" max="90" step="5" value="20" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
-            </div>
-
-            <!-- CHỌN THỜI HẠN VAY (3 - 8 NĂM) -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1.5">Chọn thời hạn vay (Năm)</label>
-                <div class="grid grid-cols-6 gap-1" id="groupYearBtns">
-                    <button type="button" onclick="selectYear(3)" id="btnY3" class="btn-year py-2 text-xs font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition">3 năm</button>
-                    <button type="button" onclick="selectYear(4)" id="btnY4" class="btn-year py-2 text-xs font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition">4 năm</button>
-                    <button type="button" onclick="selectYear(5)" id="btnY5" class="btn-year py-2 text-xs font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition">5 năm</button>
-                    <button type="button" onclick="selectYear(6)" id="btnY6" class="btn-year py-2 text-xs font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition">6 năm</button>
-                    <button type="button" onclick="selectYear(7)" id="btnY7" class="btn-year py-2 text-xs font-bold rounded-lg border border-blue-600 bg-blue-600 text-white transition">7 năm</button>
-                    <button type="button" onclick="selectYear(8)" id="btnY8" class="btn-year py-2 text-xs font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition">8 năm</button>
-                </div>
-            </div>
-
-            <!-- CHỌN PHƯƠNG THỨC VAY -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1.5">Phương thức trả gốc</label>
-                <div class="grid grid-cols-2 gap-2" id="groupMethodBtns">
-                    <button type="button" onclick="selectMethod('nien_kim')" id="btnNienKim" class="btn-method py-2 px-3 text-xs font-bold rounded-lg border border-slate-300 bg-white text-slate-700 transition">Niên kim cố định</button>
-                    <button type="button" onclick="selectMethod('giam_dan')" id="btnGiamDan" class="btn-method py-2 px-3 text-xs font-bold rounded-lg border border-blue-600 bg-blue-600 text-white transition">Dư nợ giảm dần</button>
-                </div>
-            </div>
-
-            <!-- Gói Cố định Lãi suất -->
-            <div class="space-y-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                <!-- Chọn Mẫu Xe -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Gói cố định lãi suất</label>
-                    <select id="goiUuDai" class="w-full border border-slate-300 rounded-lg p-2 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
-                        <option value="12">Cố định 1 năm đầu (12 tháng)</option>
-                        <option value="24">Cố định 2 năm đầu (24 tháng)</option>
+                    <label class="block font-semibold text-slate-600 uppercase mb-1">Chọn dòng xe (Kèm Pin)</label>
+                    <select id="chonXe" onchange="changeCar()" class="w-full border border-slate-300 rounded-lg p-2 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none font-semibold text-slate-800">
+                        <option value="custom" data-price="0">-- Chọn dòng xe --</option>
+                        <option value="VF2" data-price="188000000">VF 2</option>
+                        <option value="VF3_ECO" data-price="285000000">VF 3 ECO</option>
+                        <option value="VF3_PLUS" data-price="296000000">VF 3 PLUS</option>
+                        <option value="VF5" data-price="496000000">VF 5</option>
+                        <option value="MinioGreen" data-price="188000000">Minio Green</option>
+                        <option value="HerioGreen" data-price="450000000">Herio Green</option>
+                        <option value="LimoGreen" data-price="699000000">Limo Green</option>
+                        <option value="ECVAN_TC" data-price="268000000">EC Van TC</option>
+                        <option value="ECVAN_NC" data-price="286000000">EC Van NC</option>
+                        <option value="ECVAN_NC_CT" data-price="306000000">EC Van NC CT</option>
+                        <option value="MPV7" data-price="750000000">MPV 7 chỗ</option>
+                        <option value="VF6_Eco" data-price="650000000">VF 6 Eco</option>
+                        <option value="VF6_Plus" data-price="710000000">VF 6 Plus</option>
+                        <option value="VF7_Eco" data-price="740000000">VinFast VF 7 Eco</option>
+                        <option value="VF7_Plus" data-price="889000000">VinFast VF 7 Plus</option>
+                        <option value="VF8_Eco" data-price="910000000">VinFast VF 8 Eco</option>
+                        <option value="VF8_Plus" data-price="1079000000">VinFast VF 8 Plus</option>
+                        <option value="VF9_Eco" data-price="1348000000">VinFast VF 9 Eco</option>
+                        <option value="VF9_Plus" data-price="1529000000">VinFast VF 9 Plus</option>
                     </select>
                 </div>
 
+                <!-- Giá Niêm Yết & Khuyến Mãi -->
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Lãi ưu đãi (%/năm)</label>
-                        <input type="number" id="laiUuDai" value="7.5" step="0.1" class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">Giá niêm yết (đ)</label>
+                        <input type="number" id="giaXe" value="285000000" step="1000000" class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 font-semibold text-blue-600">
                     </div>
                     <div>
-                        <label id="labelLaiThaNoi" class="block text-[11px] font-semibold text-slate-600 mb-1">Lãi từ năm 2 (%/năm)</label>
-                        <input type="number" id="laiThaNoi" value="10.5" step="0.1" class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">Khuyến mãi (đ)</label>
+                        <input type="number" id="khuyenMai" value="0" step="1000000" class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- CARD BÁO GIÁ + BẢNG DỰ TOÁN ĐÓNG HÀNG THÁNG (XUẤT ẢNH TRỌN GÓI) -->
-        <div id="captureArea" class="bg-white p-5 rounded-xl shadow-md border border-slate-200 space-y-3">
-            <div class="border-b pb-3 flex justify-between items-center">
+                <!-- Chi phí đăng ký / Lăn bánh -->
                 <div>
-                    <h2 class="font-bold text-slate-800 text-base">BẢNG BÁO GIÁ DỰ TOÁN</h2>
-                    <p id="outTenXe" class="text-xs font-bold text-blue-600">VF 3 ECO (Kèm Pin)</p>
-                </div>
-                <span id="outBadgePhuongThuc" class="text-[11px] bg-blue-50 text-blue-600 font-semibold px-2 py-1 rounded-full">Dư nợ giảm dần</span>
-            </div>
-
-            <div class="space-y-2 text-sm pt-1">
-                <div class="flex justify-between">
-                    <span class="text-slate-500">Giá xe niêm yết:</span>
-                    <span id="outGiaNiemYet" class="font-semibold text-slate-800">0 đ</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-slate-500">Giá xe sau ưu đãi:</span>
-                    <span id="outGiaSauUuDai" class="font-semibold text-slate-800">0 đ</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-slate-500">Chi phí đăng ký / Lăn bánh:</span>
-                    <span id="outPhiLanBanh" class="font-semibold text-slate-800">0 đ</span>
-                </div>
-                <div id="rowBHTV" class="flex justify-between text-amber-900">
-                    <span class="text-slate-500">Bảo hiểm thân vỏ:</span>
-                    <span id="outPhiBHTVRow" class="font-semibold">0 đ</span>
-                </div>
-                <div class="flex justify-between pt-1 border-t border-dashed">
-                    <span class="text-slate-700 font-medium">Tổng chi phí lăn bánh:</span>
-                    <span id="outTongLanBanh" class="font-bold text-slate-900">0 đ</span>
+                    <label class="block font-semibold text-slate-600 uppercase mb-1">Chi phí đăng ký / Lăn bánh (đ)</label>
+                    <input type="number" id="phiDangKy" value="12000000" step="500000" class="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500">
                 </div>
 
-                <hr class="my-2 border-slate-100">
-
-                <div class="flex justify-between bg-blue-50 p-2.5 rounded-lg text-blue-950">
-                    <span class="font-semibold">CẦN TRẢ TRƯỚC:</span>
-                    <span id="outCanTraTruoc" class="font-bold text-blue-600 text-base">0 đ</span>
-                </div>
-
-                <div class="flex justify-between">
-                    <span class="text-slate-500">Khoản vay (<span id="outThoiHanText">7 năm</span>):</span>
-                    <span id="outSoTienVay" class="font-semibold text-slate-800">0 đ</span>
-                </div>
-
-                <!-- BẢNG DỰ TOÁN ĐÓNG HÀNG THÁNG TRONG SUỐT THỜI GIAN VAY -->
-                <div class="pt-2">
-                    <div class="flex justify-between items-center mb-1.5">
-                        <p class="text-xs font-bold text-slate-800 uppercase">LỊCH DỰ TOÁN ĐÓNG HÀNG THÁNG</p>
-                        <span id="outScheduleNote" class="text-[10px] text-slate-500">84 kỳ trả</span>
+                <!-- Bảo hiểm thân vỏ -->
+                <div class="bg-amber-50/60 p-2.5 rounded-lg border border-amber-200/60 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="checkBHTV" checked class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
+                            <span class="font-bold text-amber-900 uppercase">Mua bảo hiểm thân vỏ</span>
+                        </label>
+                        <span id="outBHTVValue" class="font-bold text-amber-800">0 đ</span>
                     </div>
-                    <div id="tableScrollContainer" class="max-h-60 overflow-y-auto border border-slate-200 rounded-lg">
-                        <table class="w-full text-left text-[11px] border-collapse">
-                            <thead class="sticky top-0 bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                                <tr>
-                                    <th class="p-1.5 text-center">Kỳ</th>
-                                    <th class="p-1.5 text-right">Gốc</th>
-                                    <th class="p-1.5 text-right">Lãi</th>
-                                    <th class="p-1.5 text-right font-black text-blue-700">Tổng trả</th>
-                                    <th class="p-1.5 text-right">Dư nợ còn</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBodySchedule" class="divide-y divide-slate-100 bg-white">
-                                <!-- Render lịch từ JS -->
-                            </tbody>
-                        </table>
+                    
+                    <div id="boxBHTVConfig" class="grid grid-cols-2 gap-2 pt-1">
+                        <div>
+                            <label class="block text-[11px] text-slate-600 mb-0.5">Tỷ lệ phí (%/năm)</label>
+                            <input type="number" id="tyLeBHTV" value="1.3" step="0.1" class="w-full border border-slate-300 rounded-md p-1.5 focus:ring-1 focus:ring-blue-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-600 mb-0.5">Thanh toán</label>
+                            <select id="cachTraBHTV" class="w-full border border-slate-300 rounded-md p-1.5 focus:ring-1 focus:ring-blue-500 bg-white">
+                                <option value="cash">Tiền mặt (Lăn bánh)</option>
+                                <option value="loan">Gộp vào khoản vay</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
+
+                <hr class="border-slate-100 my-1">
+
+                <!-- Trả trước % -->
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="font-semibold text-slate-600 uppercase">Tỷ lệ trả trước (%)</label>
+                        <span id="labelTyLe" class="font-bold text-blue-600 text-sm">20%</span>
+                    </div>
+                    <input type="range" id="tyLeTraTruoc" min="0" max="90" step="5" value="20" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                </div>
+
+                <!-- CHỌN THỜI HẠN VAY (3 - 8 NĂM) -->
+                <div>
+                    <label class="block font-semibold text-slate-600 uppercase mb-1">Thời hạn vay (Năm)</label>
+                    <div class="grid grid-cols-6 gap-1" id="groupYearBtns">
+                        <button type="button" onclick="selectYear(3)" id="btnY3" class="btn-year py-1.5 font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition">3 năm</button>
+                        <button type="button" onclick="selectYear(4)" id="btnY4" class="btn-year py-1.5 font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition">4 năm</button>
+                        <button type="button" onclick="selectYear(5)" id="btnY5" class="btn-year py-1.5 font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition">5 năm</button>
+                        <button type="button" onclick="selectYear(6)" id="btnY6" class="btn-year py-1.5 font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition">6 năm</button>
+                        <button type="button" onclick="selectYear(7)" id="btnY7" class="btn-year py-1.5 font-bold rounded-lg border border-blue-600 bg-blue-600 text-white transition">7 năm</button>
+                        <button type="button" onclick="selectYear(8)" id="btnY8" class="btn-year py-1.5 font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition">8 năm</button>
+                    </div>
+                </div>
+
+                <!-- CHỌN PHƯƠNG THỨC VAY -->
+                <div>
+                    <label class="block font-semibold text-slate-600 uppercase mb-1">Phương thức trả gốc</label>
+                    <div class="grid grid-cols-2 gap-2" id="groupMethodBtns">
+                        <button type="button" onclick="selectMethod('nien_kim')" id="btnNienKim" class="btn-method py-1.5 px-2 font-bold rounded-lg border border-slate-300 bg-white text-slate-700 transition">Niên kim cố định</button>
+                        <button type="button" onclick="selectMethod('giam_dan')" id="btnGiamDan" class="btn-method py-1.5 px-2 font-bold rounded-lg border border-blue-600 bg-blue-600 text-white transition">Dư nợ giảm dần</button>
+                    </div>
+                </div>
+
+                <!-- Gói Cố định Lãi suất -->
+                <div class="space-y-2 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+                    <div>
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">Gói cố định lãi suất</label>
+                        <select id="goiUuDai" class="w-full border border-slate-300 rounded-lg p-1.5 bg-white focus:ring-2 focus:ring-blue-500">
+                            <option value="12">Cố định 1 năm đầu (12 tháng)</option>
+                            <option value="24">Cố định 2 năm đầu (24 tháng)</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-600 mb-0.5">Lãi ưu đãi (%/năm)</label>
+                            <input type="number" id="laiUuDai" value="7.5" step="0.1" class="w-full border border-slate-300 rounded-lg p-1.5 focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label id="labelLaiThaNoi" class="block text-[11px] font-semibold text-slate-600 mb-0.5">Lãi từ năm 2 (%/năm)</label>
+                            <input type="number" id="laiThaNoi" value="10.5" step="0.1" class="w-full border border-slate-300 rounded-lg p-1.5 focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Thông tin TVBH -->
-            <div class="pt-3 mt-3 border-t text-center text-xs text-slate-500 space-y-0.5">
-                <p class="font-bold text-slate-700">TƯ VẤN BÁN HÀNG VINFAST</p>
-                <p>Hotline / Zalo: <span class="font-semibold text-slate-800">0913.826.699 (Long)</span></p>
-            </div>
-        </div>
+            <!-- CỘT PHẢI: XUẤT BÁO GIÁ & BẢNG 36 KỲ (XUẤT ẢNH CHUẨN ĐẸP) -->
+            <div class="col-span-7 flex flex-col justify-between space-y-3 min-h-0">
+                
+                <!-- KHU VỰC CẦN CHỤP MÀN HÌNH BÁO GIÁ (CAPTURE AREA) -->
+                <div id="captureArea" class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col justify-between overflow-hidden">
+                    <div>
+                        <div class="border-b pb-2 flex justify-between items-center">
+                            <div>
+                                <h2 class="font-bold text-slate-800 text-sm uppercase">Bảng Dự Toán Chi Phí & Trả Góp Xe</h2>
+                                <p id="outTenXe" class="text-xs font-bold text-blue-600">VF 3 ECO (Kèm Pin)</p>
+                            </div>
+                            <span id="outBadgePhuongThuc" class="text-[11px] bg-blue-50 text-blue-600 font-semibold px-2 py-0.5 rounded-full border border-blue-200">Dư nợ giảm dần</span>
+                        </div>
 
-        <!-- NÚT THAO TÁC -->
-        <div class="grid grid-cols-2 gap-3 pt-1">
-            <button id="btnDownload" onclick="downloadImage()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-medium py-3 rounded-xl shadow transition flex items-center justify-center gap-2 text-sm">
-                📸 Tải Ảnh Báo Giá
-            </button>
-            <button onclick="shareZalo()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl shadow transition flex items-center justify-center gap-2 text-sm">
-                💬 Gửi Qua Zalo
-            </button>
+                        <!-- TỔNG HỢP CHI PHÍ -->
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs py-2 border-b border-slate-100">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Giá xe niêm yết:</span>
+                                <span id="outGiaNiemYet" class="font-semibold text-slate-800">0 đ</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Chi phí đăng ký:</span>
+                                <span id="outPhiLanBanh" class="font-semibold text-slate-800">0 đ</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Giá xe sau ưu đãi:</span>
+                                <span id="outGiaSauUuDai" class="font-semibold text-slate-800">0 đ</span>
+                            </div>
+                            <div id="rowBHTV" class="flex justify-between">
+                                <span class="text-slate-500">Bảo hiểm thân vỏ:</span>
+                                <span id="outPhiBHTVRow" class="font-semibold text-amber-800">0 đ</span>
+                            </div>
+                        </div>
+
+                        <!-- KHOẢN CẦN TRẢ & VAY -->
+                        <div class="grid grid-cols-2 gap-2 my-2">
+                            <div class="bg-blue-50 p-2 rounded-lg text-blue-950 border border-blue-100">
+                                <span class="text-[11px] text-blue-700 block font-medium">CẦN TRẢ TRƯỚC:</span>
+                                <span id="outCanTraTruoc" class="font-bold text-blue-600 text-sm">0 đ</span>
+                            </div>
+                            <div class="bg-slate-50 p-2 rounded-lg text-slate-900 border border-slate-200">
+                                <span class="text-[11px] text-slate-500 block">KHOẢN VAY (<span id="outThoiHanText">7 năm</span>):</span>
+                                <span id="outSoTienVay" class="font-bold text-slate-800 text-sm">0 đ</span>
+                            </div>
+                        </div>
+
+                        <!-- BẢNG LỊCH TRẢ NỢ GIỚI HẠN ĐÚNG 36 THÁNG ĐẦU -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <p class="text-[11px] font-bold text-slate-800 uppercase">Lịch trả góp (36 tháng đầu tiên)</p>
+                                <span id="outScheduleNote" class="text-[10px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">Hiển thị tối đa 36 kỳ</span>
+                            </div>
+                            
+                            <div id="tableScrollContainer" class="max-h-[310px] overflow-y-auto border border-slate-200 rounded-lg">
+                                <table class="w-full text-left text-[11px] border-collapse">
+                                    <thead class="sticky top-0 bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                                        <tr>
+                                            <th class="p-1.5 text-center">Kỳ</th>
+                                            <th class="p-1.5 text-right">Gốc</th>
+                                            <th class="p-1.5 text-right">Lãi</th>
+                                            <th class="p-1.5 text-right font-black text-blue-700">Tổng trả</th>
+                                            <th class="p-1.5 text-right">Dư nợ còn</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableBodySchedule" class="divide-y divide-slate-100 bg-white">
+                                        <!-- Render đúng 36 kỳ từ JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thông tin TVBH Footer Card -->
+                    <div class="pt-2 border-t text-center text-[11px] text-slate-500 flex justify-between items-center">
+                        <span class="font-bold text-slate-700">TƯ VẤN BÁN HÀNG VINFAST</span>
+                        <span>Hotline / Zalo: <span class="font-semibold text-slate-800">0913.826.699 (Long)</span></span>
+                    </div>
+                </div>
+
+                <!-- NÚT THAO TÁC -->
+                <div class="grid grid-cols-2 gap-3 shrink-0">
+                    <button id="btnDownload" onclick="downloadImage()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-medium py-2.5 rounded-xl shadow transition flex items-center justify-center gap-2 text-xs">
+                        📸 Tải Ảnh Báo Giá (Tỷ lệ 4:3)
+                    </button>
+                    <button onclick="shareZalo()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-xl shadow transition flex items-center justify-center gap-2 text-xs">
+                        💬 Gửi Nội Dung Qua Zalo
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -251,9 +278,9 @@
             for (let i = 3; i <= 8; i++) {
                 const btn = document.getElementById(`btnY${i}`);
                 if (i === yr) {
-                    btn.className = "btn-year py-2 text-xs font-bold rounded-lg border border-blue-600 bg-blue-600 text-white transition";
+                    btn.className = "btn-year py-1.5 font-bold rounded-lg border border-blue-600 bg-blue-600 text-white transition";
                 } else {
-                    btn.className = "btn-year py-2 text-xs font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition";
+                    btn.className = "btn-year py-1.5 font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition";
                 }
             }
             calculate();
@@ -265,11 +292,11 @@
             const btnGD = document.getElementById('btnGiamDan');
 
             if (method === 'nien_kim') {
-                btnNK.className = "btn-method py-2 px-3 text-xs font-bold rounded-lg border border-blue-600 bg-blue-600 text-white transition";
-                btnGD.className = "btn-method py-2 px-3 text-xs font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition";
+                btnNK.className = "btn-method py-1.5 px-2 font-bold rounded-lg border border-blue-600 bg-blue-600 text-white transition";
+                btnGD.className = "btn-method py-1.5 px-2 font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition";
             } else {
-                btnGD.className = "btn-method py-2 px-3 text-xs font-bold rounded-lg border border-blue-600 bg-blue-600 text-white transition";
-                btnNK.className = "btn-method py-2 px-3 text-xs font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition";
+                btnGD.className = "btn-method py-1.5 px-2 font-bold rounded-lg border border-blue-600 bg-blue-600 text-white transition";
+                btnNK.className = "btn-method py-1.5 px-2 font-bold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition";
             }
             calculate();
         }
@@ -331,18 +358,19 @@
             document.getElementById('outGiaNiemYet').innerText = formatVND(giaXe);
             document.getElementById('outGiaSauUuDai').innerText = formatVND(giaSauUuDai);
             document.getElementById('outPhiLanBanh').innerText = formatVND(phiDangKy);
-            document.getElementById('outTongLanBanh').innerText = formatVND(tongLanBanh);
             document.getElementById('outCanTraTruoc').innerText = formatVND(canTraTruoc);
             document.getElementById('outSoTienVay').innerText = formatVND(soTienVay);
 
-            // BẢNG LỊCH DỰ TOÁN TRẢ NỢ CHI TIẾT TỪNG THÁNG
+            // BẢNG BÀO GIÁ LỊCH TRẢ NỢ GIỚI HẠN ĐÚNG 36 THÁNG
             const scheduleBody = document.getElementById('tableBodySchedule');
             scheduleBody.innerHTML = '';
-            document.getElementById('outScheduleNote').innerText = `${totalMonths} kỳ trả`;
 
             let duNo = soTienVay;
             const rUuDai = laiUuDaiNam / 12;
             const rThaNoi = laiThaNoiNam / 12;
+
+            // ĐIỀU KIỆN GIỚI HẠN HIỂN THỊ CHỈ 36 KỲ
+            const maxShowMonths = Math.min(36, totalMonths);
 
             if (currentMethod === 'giam_dan') {
                 const gocMoiThang = soTienVay / totalMonths;
@@ -353,16 +381,18 @@
                     const tongMoiThang = gocMoiThang + laiMoiThang;
                     duNo = Math.max(0, duNo - gocMoiThang);
 
-                    const tr = document.createElement('tr');
-                    tr.className = (m % 2 === 0) ? 'bg-slate-50/50' : 'bg-white';
-                    tr.innerHTML = `
-                        <td class="p-1.5 text-center font-medium">${m}</td>
-                        <td class="p-1.5 text-right">${formatVND(gocMoiThang)}</td>
-                        <td class="p-1.5 text-right text-slate-500">${formatVND(laiMoiThang)}</td>
-                        <td class="p-1.5 text-right font-bold text-blue-600">${formatVND(tongMoiThang)}</td>
-                        <td class="p-1.5 text-right text-slate-400">${formatVND(duNo)}</td>
-                    `;
-                    scheduleBody.appendChild(tr);
+                    if (m <= maxShowMonths) {
+                        const tr = document.createElement('tr');
+                        tr.className = (m % 2 === 0) ? 'bg-slate-50/50' : 'bg-white';
+                        tr.innerHTML = `
+                            <td class="p-1.5 text-center font-medium">${m}</td>
+                            <td class="p-1.5 text-right">${formatVND(gocMoiThang)}</td>
+                            <td class="p-1.5 text-right text-slate-500">${formatVND(laiMoiThang)}</td>
+                            <td class="p-1.5 text-right font-bold text-blue-600">${formatVND(tongMoiThang)}</td>
+                            <td class="p-1.5 text-right text-slate-400">${formatVND(duNo)}</td>
+                        `;
+                        scheduleBody.appendChild(tr);
+                    }
                 }
             } else {
                 // Niên kim cố định
@@ -388,16 +418,18 @@
                     const gocMoiThang = currentPMT - laiMoiThang;
                     duNo = Math.max(0, duNo - gocMoiThang);
 
-                    const tr = document.createElement('tr');
-                    tr.className = (m % 2 === 0) ? 'bg-slate-50/50' : 'bg-white';
-                    tr.innerHTML = `
-                        <td class="p-1.5 text-center font-medium">${m}</td>
-                        <td class="p-1.5 text-right">${formatVND(gocMoiThang)}</td>
-                        <td class="p-1.5 text-right text-slate-500">${formatVND(laiMoiThang)}</td>
-                        <td class="p-1.5 text-right font-bold text-blue-600">${formatVND(currentPMT)}</td>
-                        <td class="p-1.5 text-right text-slate-400">${formatVND(duNo)}</td>
-                    `;
-                    scheduleBody.appendChild(tr);
+                    if (m <= maxShowMonths) {
+                        const tr = document.createElement('tr');
+                        tr.className = (m % 2 === 0) ? 'bg-slate-50/50' : 'bg-white';
+                        tr.innerHTML = `
+                            <td class="p-1.5 text-center font-medium">${m}</td>
+                            <td class="p-1.5 text-right">${formatVND(gocMoiThang)}</td>
+                            <td class="p-1.5 text-right text-slate-500">${formatVND(laiMoiThang)}</td>
+                            <td class="p-1.5 text-right font-bold text-blue-600">${formatVND(currentPMT)}</td>
+                            <td class="p-1.5 text-right text-slate-400">${formatVND(duNo)}</td>
+                        `;
+                        scheduleBody.appendChild(tr);
+                    }
                 }
             }
         }
@@ -419,11 +451,9 @@
             btn.innerText = "⏳ Đang tạo ảnh...";
             btn.disabled = true;
 
-            // Tạm thời bỏ giới hạn chiều cao khung cuộn để chụp toàn bộ lịch trả nợ
+            // Mở rộng bảng tạm thời để chụp trọn vẹn 36 kỳ
             const originalMaxHeight = scrollContainer.style.maxHeight;
-            const originalOverflow = scrollContainer.style.overflow;
             scrollContainer.style.maxHeight = 'none';
-            scrollContainer.style.overflow = 'visible';
 
             setTimeout(() => {
                 html2canvas(captureArea, {
@@ -432,9 +462,7 @@
                     useCORS: true,
                     backgroundColor: '#ffffff'
                 }).then(canvas => {
-                    // Phục hồi lại khung cuộn giao diện ban đầu
                     scrollContainer.style.maxHeight = originalMaxHeight;
-                    scrollContainer.style.overflow = originalOverflow;
 
                     canvas.toBlob(function(blob) {
                         const url = URL.createObjectURL(blob);
@@ -446,15 +474,14 @@
                         document.body.removeChild(a);
                         URL.revokeObjectURL(url);
 
-                        btn.innerText = "📸 Tải Ảnh Báo Giá";
+                        btn.innerText = "📸 Tải Ảnh Báo Giá (Tỷ lệ 4:3)";
                         btn.disabled = false;
                     }, 'image/png');
                 }).catch(err => {
                     scrollContainer.style.maxHeight = originalMaxHeight;
-                    scrollContainer.style.overflow = originalOverflow;
-                    btn.innerText = "📸 Tải Ảnh Báo Giá";
+                    btn.innerText = "📸 Tải Ảnh Báo Giá (Tỷ lệ 4:3)";
                     btn.disabled = false;
-                    alert("Lỗi xuất ảnh. Vui lòng chụp màn hình hoặc thử lại!");
+                    alert("Không thể chụp ảnh, vui lòng thử lại!");
                 });
             }, 100);
         }
